@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Repositories\CategoryRepository;
 use App\Helpers\StringHelper;
+use DB;
 
 class CategoryController extends Controller {
 
@@ -18,14 +19,9 @@ class CategoryController extends Controller {
         $this->categoryRepo = $categoryRepo;
     }
 
-    public function index($type) {
-        $records = $this->categoryRepo->readCategoryByType($type);
-        $types = array(\App\Category::TYPE_VIDEO => 'Danh mục video', \App\Category::TYPE_NEWS => 'Danh mục tin tức', \App\Category::TYPE_GALLERY => 'Danh mục hình ảnh', \App\Category::TYPE_PRODUCT => 'Danh mục sản phẩm', \App\Category::TYPE_CONSTRUCTION => 'Danh mục thi công');
-        foreach ($records as $key => $val) {
-            $records[$key]['parent'] = $this->categoryRepo->readParentCategory($type, $val->parent_id);
-        }
-        $breadcrumbs = $types[$type];
-        return view('backend/category/index', compact('records', 'type', 'breadcrumbs'));
+    public function index() {
+        $records = DB::table('news_category')->where('status',1)->get();
+        return view('backend/category/index', compact('records'));
     }
 
     /**
@@ -33,9 +29,9 @@ class CategoryController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($type) {
-        $parent_html = StringHelper::getSelectOptions(\App\Category::all()->where('type', $type));
-        return view('backend/category/create', compact('type', 'parent_html'));
+    public function create() {
+        $parent_html = StringHelper::getSelectOptions(\App\NewsCategory::all());
+        return view('backend/category/create', compact('parent_html'));
     }
 
     /**
@@ -44,27 +40,23 @@ class CategoryController extends Controller {
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, $type) {
+    public function store(Request $request) {
         $input = $request->all();
         if (isset($input['status'])) {
             $input['status'] = 1;
         } else {
             $input['status'] = 0;
         }
-        if (isset($input['is_home'])) {
-            $input['is_home'] = 1;
-        } else {
-            $input['is_home'] = 0;
-        }
+        
         if ($input['parent_id'] == null) {
-            $input['parent_id'] = 0;
+            $input['parent_id'] = 0;    
         }
         $validator = \Validator::make($input, $this->categoryRepo->validateCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $this->categoryRepo->create($input);
-        return redirect()->route('admin.category.index', $type)->with('success', 'Tạo mới thành công');
+        return redirect()->route('admin.category.index')->with('success', 'Tạo mới thành công');
     }
 
     /**
@@ -83,10 +75,10 @@ class CategoryController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($type, $id) {
+    public function edit($id) {
         $record = $this->categoryRepo->find($id);
-        $parent_html = StringHelper::getSelectOptions(\App\Category::all()->where('type', $type), $record->parent_id);
-        return view('backend/category/edit', compact('record', 'type', 'parent_html'));
+        $parent_html = StringHelper::getSelectOptions(\App\Category::all(), $record->parent_id);
+        return view('backend/category/edit', compact('record', 'parent_html'));
     }
 
     /**
@@ -96,7 +88,7 @@ class CategoryController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $type, $id) {
+    public function update(Request $request, $id) {
         $input = $request->all();
         if (isset($input['status'])) {
             $input['status'] = 1;

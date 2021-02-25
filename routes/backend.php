@@ -14,12 +14,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::post('/config/update/{id}', ['as' => 'admin.config.update', 'uses' => 'Backend\ConfigController@update']);
 
     /* Quản lý danh mục */
-    Route::get('/category/{type}', ['as' => 'admin.category.index', 'uses' => 'Backend\CategoryController@index']);
-    Route::get('/category/{type}/create', ['as' => 'admin.category.create', 'uses' => 'Backend\CategoryController@create']);
-    Route::get('/category/{type}/edit/{id}', ['as' => 'admin.category.edit', 'uses' => 'Backend\CategoryController@edit']);
-    Route::post('/category/{type}/store', ['as' => 'admin.category.store', 'uses' => 'Backend\CategoryController@store']);
-    Route::post('/category/{type}/update/{id}', ['as' => 'admin.category.update', 'uses' => 'Backend\CategoryController@update']);
-    Route::delete('/category/{type}/delete/{id}', ['as' => 'admin.category.destroy', 'uses' => 'Backend\CategoryController@destroy']);
+    Route::get('/category', ['as' => 'admin.category.index', 'uses' => 'Backend\CategoryController@index']);
+    Route::get('/category/create', ['as' => 'admin.category.create', 'uses' => 'Backend\CategoryController@create']);
+    Route::get('/category/edit/{id}', ['as' => 'admin.category.edit', 'uses' => 'Backend\CategoryController@edit']);
+    Route::post('/category/store', ['as' => 'admin.category.store', 'uses' => 'Backend\CategoryController@store']);
+    Route::post('/category/update/{id}', ['as' => 'admin.category.update', 'uses' => 'Backend\CategoryController@update']);
+    Route::delete('/category/delete/{id}', ['as' => 'admin.category.destroy', 'uses' => 'Backend\CategoryController@destroy']);
 
     /* Quản lý news */
     Route::get('/news', ['as' => 'admin.news.index', 'uses' => 'Backend\NewsController@index']);

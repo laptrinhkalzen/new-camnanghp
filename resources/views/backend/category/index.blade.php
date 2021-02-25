@@ -5,7 +5,7 @@
     <!-- Table header styling -->
     <div class="card">
         <div class="card-header header-elements-inline">
-            <h5 class="card-title">{{$breadcrumbs}}</h5>
+            <h5 class="card-title"></h5>
             <div class="header-elements">
                 <div class="list-icons">
                     <a class="list-icons-item" data-action="collapse"></a>
@@ -29,8 +29,6 @@
                 <tr>
                     <th>#</th>
                     <th>Tiêu đề</th>
-                    <th>Danh mục cha</th>
-                    <th>Thứ tự</th>
                     <th>Ngày tạo</th>
                     <th>Trạng thái</th>
                     <th>Thao tác</th>
@@ -41,8 +39,6 @@
                 <tr>
                     <td>{{++$key}}</td>
                     <td>{{$record->title}}</td>
-                    <td>@if($record->parent){{$record->parent->title}}@endif</td>
-                    <td>{{$record->ordering}}</td>
                     <td>
                         @if($record->status)
                         <span class="badge bg-success-400">Hiển thị</span>
@@ -50,10 +46,10 @@
                         <span class="badge bg-grey-400">Ẩn</span>
                         @endif
                     </td>
-                    <td>{{$record->created_at()}}</td>
+                    <td>{{$record->created_at}}</td>
                     <td class="text-center">
-                        <a href="{{route('admin.category.edit', ['type' => $type, 'id' => $record->id])}}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
-                        <form action="{!! route('admin.category.destroy', ['type' => $type, 'id' => $record->id]) !!}" method="POST" style="display: inline-block">
+                        <a href="{{route('admin.category.edit', ['id' => $record->id])}}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
+                        <form action="{!! route('admin.category.destroy', ['id' => $record->id]) !!}" method="POST" style="display: inline-block">
                             {!! method_field('DELETE') !!}
                             {!! csrf_field() !!}
                             <a title="{!! trans('base.delete') !!}" class="delete text-danger" data-action="delete">

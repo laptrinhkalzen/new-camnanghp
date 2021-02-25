@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Repositories\NewsRepository;
 use Repositories\CategoryRepository;
-use Repositories\PostHistoryRepository;
+
 
 class NewsController extends Controller {
 
@@ -15,10 +15,9 @@ class NewsController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(NewsRepository $newsRepo, CategoryRepository $categoryRepo, PostHistoryRepository $postHistoryRepo) {
+    public function __construct(NewsRepository $newsRepo, CategoryRepository $categoryRepo ) {
         $this->newsRepo = $newsRepo;
         $this->categoryRepo = $categoryRepo;
-        $this->postHistoryRepo = $postHistoryRepo;
     }
 
     public function index() {
@@ -63,9 +62,7 @@ class NewsController extends Controller {
         $input['is_hot'] = isset($input['is_hot']) ? 1 : 0;
         $input['created_by'] = \Auth::user()->id;
         $input['view_count'] = 0;
-        if (isset($input['post_schedule'])) {
-            $input['post_schedule'] = $input['post_schedule_submit'];
-        }
+       
 
         $news = $this->newsRepo->create($input);
         $news->categories()->attach($input['category_id']);
@@ -116,9 +113,7 @@ class NewsController extends Controller {
 //      status
         $input['status'] = (isset($input['status']) && \Auth::user()->role_id <> \App\User::ROLE_CONTRIBUTOR) ? 1 : 0;
         $input['is_hot'] = isset($input['is_hot']) ? 1 : 0;
-        if (isset($input['post_schedule'])) {
-            $input['post_schedule'] = $input['post_schedule_submit'];
-        }
+        
 
         $res = $this->newsRepo->update($input, $id);
         if ($res == true) {

@@ -6,17 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model {
 
-    const TYPE_VIDEO = 1;
-    const TYPE_NEWS = 2;
-    const TYPE_GALLERY = 3;
-    const TYPE_PRODUCT = 4;
-    const TYPE_CONSTRUCTION = 5;
-    const PRODUCT_SHOP_ID = 80;
-    const GALLERY_ALBUM = 40;
+    
 
-    protected $table = 'category';
+    protected $table = 'news_category';
     protected $fillable = [
-        'title', 'parent_id', 'alias', 'image', 'description', 'type', 'is_home', 'status', 'ordering'
+        'title', 'parent_id', 'alias', 'images', 'description', 'status', 'ordering', 'created_by','updated_by','language'
     ];
 
     public function created_at() {
@@ -30,18 +24,18 @@ class Category extends Model {
     /* Get all children */
 
     public function children() {
-        return $this->hasMany('\App\Category', 'parent_id');
+        return $this->hasMany('\App\NewsCategory', 'parent_id');
     }
 
     /**/
     /* Get all parent */
 
     public function parents() {
-        return $this->belongsTo('\App\Category', 'parent_id');
+        return $this->belongsTo('\App\NewsCategory', 'parent_id');
     }
 
     public function parentCategories() {
-        return $this->belongsTo('\App\Category', 'parent_id')->with('parents');
+        return $this->belongsTo('\App\NewsCategory', 'parent_id')->with('parents');
     }
 
     /**/
@@ -53,25 +47,11 @@ class Category extends Model {
     public function url() {
         return '#';
     }
-
-    public function products() {
-        return $this->belongsToMany('\App\Product', 'product_category', 'category_id', 'product_id');
-    }
-
-    public function galleries() {
-        return $this->belongsToMany('\App\Gallery', 'gallery_category', 'category_id', 'gallery_id');
-    }
-
+    
     public function news() {
         return $this->belongsToMany('\App\News', 'news_category', 'category_id', 'news_id');
     }
 
-    public function videos() {
-        return $this->belongsToMany('\App\Video', 'video_category', 'category_id', 'video_id')->withPivot('category_id');
-    }
-
-    public function items() {
-        return $this->hasMany('\App\Item');
-    }
+   
 
 }

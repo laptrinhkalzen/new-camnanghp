@@ -29,9 +29,9 @@ class Admin {
         }
         if (!is_null(Auth::user())) {
                 if (Auth::user()->role_id <> User::ROLE_ADMINISTRATOR) {
-                    if (!in_array($current_route, Auth::user()->role->route())) {
-                        abort(403);
-                    }
+                    // if (!in_array($current_route, Auth::user()->role->route())) {
+                    //     abort(403);
+                    // }
                 }
                 if ($parent_route == null) {
                     $parent_route = $current_route;

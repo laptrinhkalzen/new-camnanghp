@@ -17,9 +17,8 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <form action="{!!route('admin.category.update', ['type' => $type, 'id' => $record->id])!!}" class="form-validate-jquery" method="POST" enctype="multipart/form-data">
+                    <form action="{!!route('admin.category.update', ['id' => $record->id])!!}" class="form-validate-jquery" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
-                        <input type="hidden" name="type" value="{{$type}}"/>
                         <fieldset>
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label text-right">Danh mục cha</label>
@@ -71,25 +70,17 @@
                                 <div class="col-md-2">
                                     <input type="text" name="ordering" class="form-control touchspin text-center" value="{{$record->ordering}}">
                                 </div>
-                            </div>
-                            <div class="form-group row">
                                 <div class="form-check col-md-3 form-check-right">
                                     <label class="form-check-label float-right">
                                         Hiển thị
                                         <input type="checkbox" class="form-check-input-styled" @if($record->status)checked @endif name="status" data-fouc>
                                     </label>
                                 </div>
-                                <div class="form-check col-md-3 form-check-right">
-                                    <label class="form-check-label float-right">
-                                        Hiển thị trang chủ
-                                        <input type="checkbox" class="form-check-input-styled" @if($record->is_home)checked @endif name="is_home"  data-fouc>
-                                    </label>
-                                </div>
                             </div>
-
+                            
                         </fieldset>
                         <div class="text-right">
-                            <a type="button" href="{{route('admin.category.index', ['type' => $type])}}" class="btn btn-secondary legitRipple">Hủy</a>
+                            <a type="button" href="{{route('admin.category.index')}}" class="btn btn-secondary legitRipple">Hủy</a>
                             <button type="submit" class="btn btn-primary legitRipple">Lưu lại <i class="icon-arrow-right14 position-right"></i></button>
                         </div>
 
