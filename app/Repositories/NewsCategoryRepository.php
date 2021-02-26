@@ -20,9 +20,32 @@ class NewsCategoryRepository extends AbstractRepository
     public function model() {
         return 'App\NewsCategory';
     }
-    public function getNewsIds($category_ids)
-    {
-        return $this->model->whereIn('category_id', $category_ids)->pluck('news_id');
+    public function validateCreate() {
+        return $rules = [
+            'title' => 'required',
+            'alias' => 'required'
+        ];
     }
+
+    public function validateUpdate($id) {
+        return $rules = [
+            'title' => 'required',
+            'alias' => 'required'
+        ];
+    }
+    
+    public function readCategoryByType() {
+        return $this->model->orderBy('created_at', 'desc')->get();
+    }
+
+    public function readParentCategory($parent_id) {
+        return $this->model->where('id', $parent_id)->first();
+    }
+    public function getCurrentCategory($id) {
+        $data = $this->model->where('id', $id)->first();
+        return $data;
+    }
+    
+   
 
 }

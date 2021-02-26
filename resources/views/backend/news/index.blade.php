@@ -36,9 +36,16 @@
             </thead>
             <tbody>
                 @foreach($records as $key=>$record)
+                    
                 <tr>
                     <td>{{++$key}}</td>
-                    <td>{{$record->title}}</td>
+                    <td><a style="color: #1E88E5;">{{$record->title}}</a>
+                    @foreach($news_category as $key=>$category)
+                        @if($category->id==$record->category_id)
+                    <p><i class="fa fa-list-ul" aria-hidden="true">{{$category->title}}</i></p>
+                        @endif
+                    @endforeach
+                    </td>
                     <td>{{$record->created_at}}</td>
                     <td>
                         @if($record->status == 1)
@@ -58,6 +65,7 @@
                         </form>
                     </td>
                 </tr>
+                        
                 @endforeach
             </tbody>
         </table>

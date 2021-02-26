@@ -9,19 +9,15 @@ class News extends Model {
     //
     protected $table = "news";
     protected $fillable = [
-        'title', 'alias', 'description', 'content', 'meta_title', 'meta_keywords', 'meta_description', 'is_hot', 'status', 'ordering', 'keywords', 'images', 'created_by', 'post_schedule'
+        'title', 'alias', 'category_id', 'description', 'content', 'meta_title', 'meta_keywords', 'meta_description', 'is_hot', 'status', 'ordering', 'keywords', 'images', 'created_by', 'post_schedule', 'view_count', 'member_id', 'language'
     ];
 
     public function categories() {
-        return $this->belongsToMany('App\Category', 'news_category', 'news_id', 'category_id');
+        return $this->belongsToMany('App\NewsCategory', 'news_category', 'news_id', 'category_id');
     }
 
     public function newsCategories() {
         return $this->hasMany('App\NewsCategory');
-    }
-
-    public function getPostSchedule() {
-        return date('d/m/Y', strtotime($this->post_schedule != '0000-00-00 00:00:00' ?: $this->created_at));
     }
 
     public function url() {

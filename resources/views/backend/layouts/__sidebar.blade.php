@@ -79,19 +79,19 @@
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-newspaper2"></i> <span>Tin tức</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
-                        <li class="nav-item"><a href="{{route('admin.category.index')}}" class="nav-link">Danh mục</a></li>
+                        <li class="nav-item"><a href="{{route('admin.news_category.index')}}" class="nav-link">Danh mục</a></li>
                         <li class="nav-item"><a href="{{route('admin.news.index')}}" class="nav-link">Bài viết</a></li>
                     </ul>
                 </li>
                 
-                <li class="nav-item nav-item-submenu">
+                <!-- <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Sản phẩm</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Sản phẩm">
-                        <li class="nav-item"><a href="{{route('admin.category.index')}}" class="nav-link">Danh mục</a></li>
+                        <li class="nav-item"><a href="{{route('admin.news_category.index')}}" class="nav-link">Danh mục</a></li>
                         <li class="nav-item"><a href="{{route('admin.product.index')}}" class="nav-link">Sản phẩm</a></li>
                         <li class="nav-item"><a href="{{route('admin.attribute.index')}}" class="nav-link">Thuộc tính</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Giao diện</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -100,10 +100,10 @@
                     </ul>
                 </li>
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-users"></i> <span>Khách hàng</span></a>
+                    <a href="#" class="nav-link"><i class="icon-users"></i> <span>Quản trị thành viên</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Khách hàng">
                         <li class="nav-item"><a href="{{route('admin.contact.index')}}" class="nav-link">Liên hệ</a></li>
-                        <li class="nav-item"><a href="{{route('admin.order.index')}}" class="nav-link">Đơn hàng</a></li>
+                        <li class="nav-item"><a href="{{route('admin.member.index')}}" class="nav-link">Thành viên</a></li>
                     </ul>
                 </li>
             </ul>

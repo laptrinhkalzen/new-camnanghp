@@ -5,7 +5,8 @@ namespace App\Http\Controllers\Backend;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Repositories\NewsRepository;
-use Repositories\CategoryRepository;
+use App\Repositories\NewsCategoryRepository;
+use DB;
 
 
 class NewsController extends Controller {
@@ -15,19 +16,15 @@ class NewsController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(NewsRepository $newsRepo, CategoryRepository $categoryRepo ) {
+    public function __construct(NewsRepository $newsRepo, NewsCategoryRepository $categoryRepo ) {
         $this->newsRepo = $newsRepo;
         $this->categoryRepo = $categoryRepo;
     }
 
     public function index() {
-        
-        if (\Auth::user()->role_id == \App\User::ROLE_ADMINISTRATOR || \Auth::user()->role_id == \App\User::ROLE_EDITOR) {
-            $records = $this->newsRepo->all();
-        } else {
-            $records = $this->newsRepo->getAllByUserId(\Auth::user()->id);
-        }
-        return view('backend/news/index', compact('records'));
+            $records = DB::table('news')->get();
+            $news_category = DB::table('news_category')->get();
+        return view('backend/news/index', compact('records','news_category'));
     }
 
     /**
@@ -36,7 +33,7 @@ class NewsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $options = $this->categoryRepo->readCategoryByType(\App\Category::TYPE_NEWS);
+        $options = DB::table('news_category')->get();
         $category_html = \App\Helpers\StringHelper::getSelectOptions($options);
         return view('backend/news/create', compact('category_html'));
     }
@@ -60,7 +57,7 @@ class NewsController extends Controller {
             $input['status'] = 0;
         }
         $input['is_hot'] = isset($input['is_hot']) ? 1 : 0;
-        $input['created_by'] = \Auth::user()->id;
+        $input['member_id'] = \Auth::user()->id;
         $input['view_count'] = 0;
        
 

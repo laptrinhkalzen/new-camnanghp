@@ -4,24 +4,24 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Repositories\CategoryRepository;
+use App\Repositories\NewsCategoryRepository;
 use App\Helpers\StringHelper;
 use DB;
 
-class CategoryController extends Controller {
+class NewsCategoryController extends Controller {
 
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(CategoryRepository $categoryRepo) {
+    public function __construct(NewsCategoryRepository $categoryRepo) {
         $this->categoryRepo = $categoryRepo;
     }
 
     public function index() {
-        $records = DB::table('news_category')->where('status',1)->get();
-        return view('backend/category/index', compact('records'));
+        $records = DB::table('news_category')->get();
+        return view('backend/news_category/index', compact('records'));
     }
 
     /**
@@ -31,7 +31,7 @@ class CategoryController extends Controller {
      */
     public function create() {
         $parent_html = StringHelper::getSelectOptions(\App\NewsCategory::all());
-        return view('backend/category/create', compact('parent_html'));
+        return view('backend/news_category/create', compact('parent_html'));
     }
 
     /**
@@ -56,7 +56,7 @@ class CategoryController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $this->categoryRepo->create($input);
-        return redirect()->route('admin.category.index')->with('success', 'Tạo mới thành công');
+        return redirect()->route('admin.news_category.index')->with('success', 'Tạo mới thành công');
     }
 
     /**
@@ -77,8 +77,8 @@ class CategoryController extends Controller {
      */
     public function edit($id) {
         $record = $this->categoryRepo->find($id);
-        $parent_html = StringHelper::getSelectOptions(\App\Category::all(), $record->parent_id);
-        return view('backend/category/edit', compact('record', 'parent_html'));
+        $parent_html = StringHelper::getSelectOptions(\App\NewsCategory::all(), $record->parent_id);
+        return view('backend/news_category/edit', compact('record', 'parent_html'));
     }
 
     /**
@@ -95,11 +95,7 @@ class CategoryController extends Controller {
         } else {
             $input['status'] = 0;
         }
-        if (isset($input['is_home'])) {
-            $input['is_home'] = 1;
-        } else {
-            $input['is_home'] = 0;
-        }
+        
         if ($input['parent_id'] == null) {
             $input['parent_id'] = 0;
         }
@@ -108,7 +104,7 @@ class CategoryController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $this->categoryRepo->update($input, $id);
-        return redirect()->route('admin.category.index', $type)->with('success', 'Cập nhật thành công');
+        return redirect()->route('admin.news_category.index')->with('success', 'Cập nhật thành công');
         //
     }
 
@@ -118,9 +114,9 @@ class CategoryController extends Controller {
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($type, $id) {
+    public function destroy( $id) {
         $res = $this->categoryRepo->delete($id);
-        return redirect()->route('admin.category.index', $type)->with('success', 'Xóa thành công');
+        return redirect()->route('admin.news_category.index')->with('success', 'Xóa thành công');
     }
 
 }

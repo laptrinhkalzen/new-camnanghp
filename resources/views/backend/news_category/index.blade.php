@@ -48,8 +48,8 @@
                     </td>
                     <td>{{$record->created_at}}</td>
                     <td class="text-center">
-                        <a href="{{route('admin.category.edit', ['id' => $record->id])}}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
-                        <form action="{!! route('admin.category.destroy', ['id' => $record->id]) !!}" method="POST" style="display: inline-block">
+                        <a href="{{route('admin.news_category.edit', ['id' => $record->id])}}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
+                        <form action="{!! route('admin.news_category.destroy', ['id' => $record->id]) !!}" method="POST" style="display: inline-block">
                             {!! method_field('DELETE') !!}
                             {!! csrf_field() !!}
                             <a title="{!! trans('base.delete') !!}" class="delete text-danger" data-action="delete">

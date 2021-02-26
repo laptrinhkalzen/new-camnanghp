@@ -18,7 +18,7 @@ return [
     'edit' => 'Cập nhật',
     'admin.user.index' => 'Thành viên hệ thống',
     'admin.history.index' => 'Lịch sử xuất nhập hàng hóa',
-    'admin.category.index' => 'Quản lý danh mục',
+    'admin.news_category.index' => 'Danh mục tin tức',
     'admin.product.index' => 'Quản lý sản phẩm',
     'admin.customer.index' => 'Quản lý khách hàng',
     'admin.config.index' => 'Cấu hình website',

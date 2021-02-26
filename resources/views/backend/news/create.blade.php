@@ -1,5 +1,10 @@
 @extends('backend.layouts.master')
 @section('content')
+<script>
+    CKEDITOR.replace( '#content', {
+        height: 2000    
+    } );
+    </script>
 <div class="content">
     <form action="{!!route('admin.news.store')!!}" method="POST" enctype="multipart/form-data">
         <div class="row">
@@ -43,7 +48,7 @@
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label text-right">Danh mục <span class="text-danger">*</span></label>
                                                 <div class="col-md-9">
-                                                    <select class="select-search form-control" name="category_id[]"data-placeholder="Chọn danh mục" multiple="" required>
+                                                    <select class="select-search form-control select2" name="category_id[]"data-placeholder="Chọn danh mục" multiple="" required>
                                                         {!!$category_html!!}
                                                     </select>
                                                     {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
@@ -169,7 +174,9 @@
 @stop
 @section('script')
 @parent
-<script src="{!! asset('assets/global_assets/js/plugins/forms/selects/select2.min.js') !!}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+<link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/css/select2.min.css" rel="stylesheet" />
 <script src="{!! asset('assets/global_assets/js/plugins/forms/styling/uniform.min.js') !!}"></script>
 <script src="{!! asset('assets/global_assets/js/plugins/forms/styling/switchery.min.js') !!}"></script>
 <script src="{!! asset('assets/global_assets/js/plugins/forms/styling/switch.min.js') !!}"></script>
@@ -205,5 +212,5 @@
     } );
 </script>-->
 <script src="{!! asset('assets/backend/js/custom.js') !!}"></script>
-@include('ckfinder::setup')
 @stop
+

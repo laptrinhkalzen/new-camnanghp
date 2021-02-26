@@ -16,7 +16,7 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                    <form action="{!!route('admin.category.store')!!}" class="form-validate-jquery" method="POST" enctype="multipart/form-data">
+                    <form action="{!!route('admin.news_category.store')!!}" class="form-validate-jquery" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
                         
                         <fieldset>
@@ -85,7 +85,7 @@
 
                         </fieldset>
                         <div class="text-right">
-                            <a type="button" href="{{route('admin.category.index')}}" class="btn btn-secondary legitRipple">Hủy</a>
+                            <a type="button" href="{{route('admin.news_category.index')}}" class="btn btn-secondary legitRipple">Hủy</a>
                             <button type="submit" class="btn btn-primary legitRipple">Lưu lại <i class="icon-arrow-right14 position-right"></i></button>
                         </div>
 
