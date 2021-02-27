@@ -17,14 +17,12 @@ class TopListRepository extends AbstractRepository {
     public function validateCreate() {
         return $rules = [
             'title' => 'required|unique:news',
-            'alias' => 'required',
         ];
     }
 
     public function validateUpdate($id) {
         return $rules = [
             'title' => 'required|unique:news,title,' . $id . ',id',
-            'alias' => 'required',
         ];
     }
 
@@ -65,6 +63,8 @@ class TopListRepository extends AbstractRepository {
         $value = $this->model->select('title','category_id','status')->orderBy('created_at', 'desc')->get();
         return $value;
     }
+
+
 
 
 

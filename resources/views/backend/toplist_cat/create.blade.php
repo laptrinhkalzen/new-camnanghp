@@ -29,7 +29,7 @@
                             <div class="form-group row">
                                 <label class="col-md-3 col-form-label text-right">Url <span class="text-danger">*</span></label>
                                 <div class="col-md-9">
-                                    <input type="text" class="form-control" name="alias" readonly="" value="{!!old('alias')!!}" required="">
+                                    <input type="text" class="form-control" name="alias" value="{!!old('alias')!!}" required="">
                                     {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
                                 </div>
                             </div>

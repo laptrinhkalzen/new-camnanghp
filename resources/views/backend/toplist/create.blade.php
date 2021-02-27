@@ -1,7 +1,7 @@
 @extends('backend.layouts.master')
 @section('content')
 <div class="content">
-    <form action="{!!route('admin.news.store')!!}" method="POST" enctype="multipart/form-data">
+    <form action="{!!route('admin.toplist.store')!!}" method="POST" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-9">
                 <div class="card">
@@ -27,20 +27,6 @@
                                         <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
                                         <fieldset>
                                             <div class="form-group row">
-                                                <label class="col-md-3 col-form-label text-right">Tiêu đề <span class="text-danger">*</span></label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" name="title" value="{!!old('title')!!}" required="">
-                                                    {!! $errors->first('title', '<span class="text-danger">:message</span>') !!}
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label text-right">Url <span class="text-danger">*</span></label>
-                                                <div class="col-md-9">
-                                                    <input type="text" class="form-control" readonly="" name="alias" value="{!!old('alias')!!}" required>
-                                                    {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
-                                                </div>
-                                            </div>
-                                            <div class="form-group row">
                                                 <label class="col-md-3 col-form-label text-right">Danh mục <span class="text-danger">*</span></label>
                                                 <div class="col-md-9">
                                                     <select class="select-search form-control" name="category_id[]"data-placeholder="Chọn danh mục" multiple="" required>
@@ -50,25 +36,19 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 required control-label text-right text-semibold" for="images">Hình ảnh:</label>
-                                                <div class="col-lg-9 div-image">
-                                                    <div class="file-input file-input-ajax-new">
-                                                        <div class="file-preview ">
-                                                            <div class=" file-drop-zone">
-                                                            </div>
-                                                        </div>
-                                                        <div class="input-group file-caption-main">
-                                                            <div class="file-caption form-control kv-fileinput-caption" tabindex="500">
-                                                            </div>
-                                                            <div class="input-group-btn input-group-append">
-                                                                <div tabindex="500" class="btn btn-primary btn-file"><i class="icon-folder-open"></i>&nbsp; <span class="hidden-xs">Chọn</span>
-                                                                    <input type="file" id="images" class="upload-images" multiple="multiple" name="file_upload[]" data-fouc="">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="images" class="image_data">
-                                                    <span class="help-block">Chỉ cho phép các file ảnh có đuôi <code>jpg</code>, <code>gif</code> và <code>png</code>. File có dung lượng tối đa 20M.</span>
+                                                <label class="col-md-3 col-form-label text-right">Tiêu đề <span class="text-danger">*</span></label>
+                                                <div class="col-md-9">
+                                                    <input type="text" class="form-control" name="title" value="{!!old('title')!!}" required="">
+                                                    {!! $errors->first('title', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-md-3 col-form-label text-right">Hình ảnh</label>
+                                                <div class="col-md-9">
+                                                    <button type="button" class="btn btn-primary legitRipple" id="ckfinder-popup-1">Upload</button>
+                                                    <input hidden type="text" id="ckfinder-input-1" name="image">
+                                                    <div id="preview_image" class="mt-3"></div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -79,7 +59,7 @@
                                             </div>
                                         </fieldset>
                                         <div class="text-right">
-                                            <a type="button" href="{{route('admin.news.index')}}" class="btn btn-secondary legitRipple">Hủy</a>
+                                            <a type="button" href="{{route('admin.toplist.index')}}" class="btn btn-secondary legitRipple">Hủy</a>
                                             <button type="submit" class="btn btn-primary legitRipple">Lưu lại <i class="icon-arrow-right14 position-right"></i></button>
                                         </div>
                                     </div>
@@ -118,8 +98,8 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group row">
-                            <label class="col-form-label col-md-5 pl-3">Thứ tự </label>
-                            <div class="col-md-7">
+                            <label class="col-form-label col-md-4 pl-3">Thứ tự </label>
+                            <div class="col-md-8">
                                 <input type="text" name="ordering" class="form-control touchspin text-center" value="0">
                             </div>
                         </div>
@@ -163,6 +143,52 @@
 @stop
 @section('script')
 @parent
+
+<script type="text/javascript">
+    var button1 = document.getElementById( 'ckfinder-popup-1' );
+var button2 = document.getElementById( 'ckfinder-popup-2' );
+
+button1.onclick = function() {
+    selectFileWithCKFinder( 'ckfinder-input-1' );
+};
+button2.onclick = function() {
+    selectFileWithCKFinder( 'ckfinder-input-2' );
+};
+
+function selectFileWithCKFinder( elementId ) {
+
+    CKFinder.modal( {
+        chooseFiles: true,
+        width: 800,
+        height: 600,
+        onInit: function( finder ) {
+            finder.on( 'files:choose', function( evt ) {
+                var file = evt.data.files.first();
+                var output = document.getElementById( elementId );
+                output.value = file.getUrl();
+              showUploadedImage( file.getUrl() );
+
+            } );
+
+            finder.on( 'file:choose:resizedImage', function( evt ) {
+                var output = document.getElementById( elementId );
+                output.value = evt.data.resizedUrl;
+                showUploadedImage( evt.data.resizedUrl );
+
+            } );
+        }
+    } );
+
+    function showUploadedImage( url ) {
+            // Show chosen image to div tag
+            var img = jQuery( '<img width="500px" height="auto">' ).attr( 'src', url );
+            jQuery( '#preview_image' ).html( img );
+          }
+}
+
+
+</script>
+
 <script src="{!! asset('assets/global_assets/js/plugins/forms/selects/select2.min.js') !!}"></script>
 <script src="{!! asset('assets/global_assets/js/plugins/forms/styling/uniform.min.js') !!}"></script>
 <script src="{!! asset('assets/global_assets/js/plugins/forms/styling/switchery.min.js') !!}"></script>
@@ -200,4 +226,9 @@
 </script>-->
 <script src="{!! asset('assets/backend/js/custom.js') !!}"></script>
 @include('ckfinder::setup')
+
+<!-- Custom -->
+
+<script type="text/javascript" src="/js/ckfinder/ckfinder.js"></script>
+<script>CKFinder.config( { connectorPath: '/ckfinder/connector' } );</script>
 @stop

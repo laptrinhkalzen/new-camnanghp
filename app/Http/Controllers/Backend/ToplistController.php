@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Repositories\NewsRepository;
 use App\Repositories\TopListRepository;
+use App\Repositories\TopListCategoryRepository;
 use Repositories\CategoryRepository;
 
 class ToplistController extends Controller {
@@ -15,9 +16,10 @@ class ToplistController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(ToplistRepository $toplistRepo, CategoryRepository $categoryRepo) {
+    public function __construct(ToplistRepository $toplistRepo, CategoryRepository $categoryRepo,ToplistCategoryRepository $toplistcategoryRepo) {
         $this->toplistRepo = $toplistRepo;
         $this->categoryRepo = $categoryRepo;
+        $this->toplistcategoryRepo = $toplistcategoryRepo;
     }
 
     public function index() {
@@ -36,7 +38,7 @@ class ToplistController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        $options = $this->categoryRepo->readCategoryByType(\App\Category::TYPE_NEWS);
+        $options = $this->toplistcategoryRepo->getAll();
         $category_html = \App\Helpers\StringHelper::getSelectOptions($options);
         return view('backend/toplist/create', compact('category_html'));
     }
@@ -49,7 +51,7 @@ class ToplistController extends Controller {
      */
     public function store(Request $request) {
         $input = $request->all();
-        $validator = \Validator::make($input, $this->newsRepo->validateCreate());
+        $validator = \Validator::make($input, $this->toplistRepo->validateCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -59,19 +61,13 @@ class ToplistController extends Controller {
         } else {
             $input['status'] = 0;
         }
-        $input['is_hot'] = isset($input['is_hot']) ? 1 : 0;
         $input['created_by'] = \Auth::user()->id;
-        $input['view_count'] = 0;
-        if (isset($input['post_schedule'])) {
-            $input['post_schedule'] = $input['post_schedule_submit'];
-        }
-
-        $news = $this->newsRepo->create($input);
+        $news = $this->toplistRepo->create($input);
         $news->categories()->attach($input['category_id']);
         if ($news) {
-            return redirect()->route('admin.news.index')->with('success', 'Tạo mới thành công');
+            return redirect()->route('admin.toplist.index')->with('success', 'Tạo mới thành công');
         } else {
-            return redirect()->route('admin.news.index')->with('error', 'Tạo mới thất bại');
+            return redirect()->route('admin.toplist.index')->with('error', 'Tạo mới thất bại');
         }
     }
 
