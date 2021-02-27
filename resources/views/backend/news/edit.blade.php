@@ -3,7 +3,7 @@
 <div class="content">
     <form action="{!!route('admin.news.update', ['id' => $record->id])!!}" method="POST" enctype="multipart/form-data">
         <div class="row">
-            <div class="col-md-9">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header header-elements-inline">
                         <h6 class="card-title">Tạo mới</h6>
@@ -30,6 +30,15 @@
                                         <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
                                         <fieldset>
                                             <div class="form-group row">
+                                                <label class="col-md-3 col-form-label text-right">Danh mục <span class="text-danger">*</span></label>
+                                                <div class="col-md-9">
+                                                    <select class="select-search form-control" name="category_id[]"data-placeholder="Chọn danh mục" multiple="" required>
+                                                        {!!$category_html!!}
+                                                    </select>
+                                                    {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
                                                 <label class="col-md-3 col-form-label text-right">Tiêu đề <span class="text-danger">*</span></label>
                                                 <div class="col-md-9">
                                                     <input type="text" class="form-control" name="title" value="{!!is_null(old('title'))?$record->title:old('title')!!}" required="">
@@ -43,15 +52,7 @@
                                                     {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
                                                 </div>
                                             </div>
-                                            <div class="form-group row">
-                                                <label class="col-md-3 col-form-label text-right">Danh mục <span class="text-danger">*</span></label>
-                                                <div class="col-md-9">
-                                                    <select class="select-search form-control" name="category_id[]"data-placeholder="Chọn danh mục" multiple="" required>
-                                                        {!!$category_html!!}
-                                                    </select>
-                                                    {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
-                                                </div>
-                                            </div>
+                                            
                                             <div class="form-group row">
                                                 <label class="col-md-3 col-form-label text-right">Mô tả: </label>
                                                 <div class="col-md-9">
@@ -86,6 +87,35 @@
                                                     <textarea class="form-control ckeditor" id="content" name="content">{!!is_null(old('content'))?$record->content:old('content')!!}</textarea>
                                                 </div>
                                             </div>
+                                            <div class="form-group row">
+                            <label class="col-form-label col-md-3 text-right">Thứ tự </label>
+                            <div class="col-md-3">
+                                <input type="text" name="ordering" class="form-control touchspin text-center" value="{!!is_null(old('ordering'))?$record->ordering:old('ordering')!!}">
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="form-group row">
+                            <label class="col-md-3 col-form-label text-right">Từ khóa</label>
+                            <div class="col-md-9">
+                                <input type="text" class="form-control tokenfield" name="keywords" data-fouc value="{!!$record->keywords!!}">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="form-check col-md-4 form-check-right">
+                                <label class="form-check-label float-right">
+                                    Hiển thị
+                                    <input type="checkbox" class="form-check-input-styled" name="status" data-fouc="" @if($record->status) checked @endif>
+                                </label>
+                            </div>
+                        
+                            <div class="form-check col-md-5 form-check-right">
+                                <label class="form-check-label float-right">
+                                    Tin nổi bật
+                                    <input type="checkbox" class="form-check-input-styled" name="is_hot" data-fouc="" @if($record->is_hot) checked @endif>
+                                </label>
+                            </div>
+                        </div>
 
 
                                         </fieldset>
@@ -129,49 +159,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="form-group row">
-                            <label class="col-form-label col-md-4 text-right">Thứ tự </label>
-                            <div class="col-md-5">
-                                <input type="text" name="ordering" class="form-control touchspin text-center" value="{!!is_null(old('ordering'))?$record->ordering:old('ordering')!!}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="form-check col-md-5 form-check-right">
-                                <label class="form-check-label float-right">
-                                    Hiển thị
-                                    <input type="checkbox" class="form-check-input-styled" name="status" data-fouc="" @if($record->status) checked @endif>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="form-check col-md-5 form-check-right">
-                                <label class="form-check-label float-right">
-                                    Tin nổi bật
-                                    <input type="checkbox" class="form-check-input-styled" name="is_hot" data-fouc="" @if($record->is_hot) checked @endif>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="form-check-label col-md-6  text-left">Hẹn ngày đăng </label>
-                            <div class="input-group col-md-12" style="margin-top:20px">
-                                <span class="input-group-prepend">
-                                    <span class="input-group-text"><i class="icon-calendar5"></i></span>
-                                </span>
-                                <input type="text" class="form-control pickadate" placeholder="Ngày đăng" name="post_schedule" value="{!!is_null(old('post_schedule'))?$record->getPostSchedule():old('post_schedule')!!}">
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-md-3 col-form-label text-right">Từ khóa</label>
-                            <div class="col-md-9">
-                                <input type="text" class="form-control tokenfield" name="keywords" data-fouc value="{!!$record->keywords!!}">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            
         </div>
     </form>
 </div>

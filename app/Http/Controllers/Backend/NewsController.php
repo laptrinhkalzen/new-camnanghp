@@ -110,6 +110,9 @@ class NewsController extends Controller {
      */
     public function edit($id) {
         $record = $this->newsRepo->find($id);
+        $category_ids = $record->categories()->get()->pluck('id')->toArray();
+        $options = $this->categoryRepo->readCategoryByType(\App\Category::TYPE_NEWS);
+        $category_html = \App\Helpers\StringHelper::getSelectOptions($options, $category_ids);
         return view('backend/news/edit', compact('record', 'category_html'));
     }
 
