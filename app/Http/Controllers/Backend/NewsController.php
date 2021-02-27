@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Repositories\NewsRepository;
 use App\Repositories\NewsCategoryRepository;
 use DB;
+use Carbon\Carbon;
 
 
 class NewsController extends Controller {
@@ -45,7 +46,8 @@ class NewsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $input = $request->all();
+        $input = $request->except(['_token']);
+
         $validator = \Validator::make($input, $this->newsRepo->validateCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -59,10 +61,18 @@ class NewsController extends Controller {
         $input['is_hot'] = isset($input['is_hot']) ? 1 : 0;
         $input['member_id'] = \Auth::user()->id;
         $input['view_count'] = 0;
+        $input['created_at'] = Carbon::now('Asia/Ho_Chi_Minh');
+        // $input['updated_at'] = '0000-00-00 00:00:00 ';
        
 
-        $news = $this->newsRepo->create($input);
-        $news->categories()->attach($input['category_id']);
+        
+        //dd($request->category_id);
+        foreach ($input['category_id'] as $key => $value) {
+            $input['category_id']=$value;
+        }
+        $news = DB::table('news')->insert($input);
+        //$data['id']=$input['category_id'];
+        // $news->categories()->attach($input['category_id']);
         if ($news) {
             return redirect()->route('admin.news.index')->with('success', 'Tạo mới thành công');
         } else {

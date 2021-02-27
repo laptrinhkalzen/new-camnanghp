@@ -43,7 +43,7 @@
             <ul class="nav nav-sidebar" data-nav-type="accordion">
 
                 <!-- Main -->
-                <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">Main</div> <i class="icon-menu" title="Main"></i></li>
+                <li class="nav-item-header"><div class="text-uppercase font-size-xs line-height-xs">CHỨC NĂNG CHÍNH</div> <i class="icon-menu" title="Main"></i></li>
                 <li class="nav-item">
                     <a href="{{route('admin.index')}}" class="nav-link active">
                         <i class="icon-home4"></i>
@@ -52,14 +52,14 @@
                         </span>
                     </a>
                 </li>
-                @if (\Auth::user()->role_id == \App\User::ROLE_ADMINISTRATOR)
+               
                 <li class="nav-item">
                     <a href="{{route('admin.config.index')}}" class="nav-link">
                         <i class="icon-cog"></i> 
                         <span>Cấu hình website</span>
                     </a>
                 </li>
-                <li class="nav-item nav-item-submenu">
+                <!-- <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-user-tie"></i> <span>Người dùng</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
 
@@ -74,8 +74,8 @@
                             </a>
                         </li>
                     </ul>
-                </li>
-                @endif
+                </li> -->
+                
                 <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-newspaper2"></i> <span>Tin tức</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
@@ -92,19 +92,19 @@
                         <li class="nav-item"><a href="{{route('admin.attribute.index')}}" class="nav-link">Thuộc tính</a></li>
                     </ul>
                 </li> -->
-                <li class="nav-item nav-item-submenu">
+                <!-- <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Giao diện</span></a>
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                         <li class="nav-item"><a href="{{route('admin.slide.index')}}" class="nav-link">Slide</a></li>
                         <li class="nav-item"><a href="{{route('admin.menu.index')}}" class="nav-link">Menu</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="nav-item nav-item-submenu">
-                    <a href="#" class="nav-link"><i class="icon-users"></i> <span>Quản trị thành viên</span></a>
-                    <ul class="nav nav-group-sub" data-submenu-title="Khách hàng">
+                    <a href="{{route('admin.member.index')}}" class="nav-link"><i class="icon-users"></i> <span>Quản trị thành viên</span></a>
+                    <!-- <ul class="nav nav-group-sub" data-submenu-title="Khách hàng">
                         <li class="nav-item"><a href="{{route('admin.contact.index')}}" class="nav-link">Liên hệ</a></li>
                         <li class="nav-item"><a href="{{route('admin.member.index')}}" class="nav-link">Thành viên</a></li>
-                    </ul>
+                    </ul> -->
                 </li>
             </ul>
         </div>
