@@ -12,9 +12,9 @@ class News extends Model {
         'title', 'alias', 'category_id', 'description', 'content', 'meta_title', 'meta_keywords', 'meta_description', 'is_hot', 'status', 'ordering', 'keywords', 'images', 'created_by', 'view_count', 'member_id', 'language'
     ];
 
-    public function categories() {
-        return $this->belongsToMany('App\NewsCategory', 'news_category', 'news_id', 'category_id');
-    }
+    // public function categories() {
+    //     return $this->belongsToMany('App\NewsCategory', 'news_category', 'news_id', 'category_id');
+    // }
 
     public function newsCategories() {
         return $this->hasMany('App\NewsCategory');

@@ -63,13 +63,25 @@ class NewsController extends Controller {
         $input['view_count'] = 0;
         $input['created_at'] = Carbon::now('Asia/Ho_Chi_Minh');
         // $input['updated_at'] = '0000-00-00 00:00:00 ';
-       
-
-        
-        //dd($request->category_id);
+        $count=0;
         foreach ($input['category_id'] as $key => $value) {
+            $count++;
+        }
+
+        //dd($count);
+       // dd($input['category_id']);
+        foreach ($input['category_id'] as $key => $value) {
+            if($key==0){
             $input['category_id']=$value;
         }
+        elseif($key==$count-1 ){
+            $input['category_id'].=','.$value;
+        }
+        else{
+            $input['category_id'].=','.$value;
+        }
+        }
+        //dd($input);
         $news = DB::table('news')->insert($input);
         //$data['id']=$input['category_id'];
         // $news->categories()->attach($input['category_id']);
@@ -98,9 +110,6 @@ class NewsController extends Controller {
      */
     public function edit($id) {
         $record = $this->newsRepo->find($id);
-        $category_ids = $record->categories()->get()->pluck('id')->toArray();
-        $options = $this->categoryRepo->readCategoryByType(\App\Category::TYPE_NEWS);
-        $category_html = \App\Helpers\StringHelper::getSelectOptions($options, $category_ids);
         return view('backend/news/edit', compact('record', 'category_html'));
     }
 
@@ -139,9 +148,7 @@ class NewsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $news = $this->newsRepo->find($id);
-        $news->categories()->detach();
-        $this->newsRepo->delete($id);
+        $news = DB::table('news')->where('id',$id)->delete();
         return redirect()->route('admin.news.index')->with('success', 'Xóa thành công');
         //
     }
