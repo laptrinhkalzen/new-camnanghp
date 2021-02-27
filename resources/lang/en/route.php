@@ -43,5 +43,7 @@ return [
     'admin.role.index' => 'Phân quyền',
     'admin.subscriber.index' => 'Đăng kí theo dõi',
     'admin.service.index' => 'Dịch vụ',
-    'admin.review.index'=>'Đánh giá'
+    'admin.review.index'=>'Đánh giá',
+    'admin.toplist.index' => 'Toplist',
+    'admin.toplist-category.index' => 'Danh mục Toplist'
 ];

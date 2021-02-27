@@ -28,8 +28,8 @@ $config['authentication'] = '\App\Http\Middleware\CustomCKFinderAuth';
 /*============================ License Key ============================================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_licenseKey
 
-$config['licenseName'] = 'alagreen.vn';
-$config['licenseKey']  = 'MHUHW2VLUUL5NV6GX1NX6Y2CCRVJC';
+$config['licenseName'] = 'camnanghp.local';
+$config['licenseKey']  = 'C1H1FPJC654V47SP1WG5B1QB265KL';
 
 /*============================ CKFinder Internal Directory ============================*/
 // http://docs.cksource.com/ckfinder3-php/configuration.html#configuration_options_privateDir
@@ -81,7 +81,7 @@ $config['backends']['laravel_logs'] = array(
 $config['backends']['default'] = array(
     'name'         => 'default',
     'adapter'      => 'local',
-    'baseUrl'      => config('app.url').'/upload/',
+    'baseUrl'      => '/upload/',
     'root'         => public_path('/upload/'),
     'chmodFiles'   => 0777,
     'chmodFolders' => 0755,
@@ -187,4 +187,5 @@ $config['csrfProtection'] = true;
 /**
  * Config must be returned - do not change it.
  */
+
 return $config;

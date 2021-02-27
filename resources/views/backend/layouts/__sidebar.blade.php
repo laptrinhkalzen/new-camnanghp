@@ -83,6 +83,14 @@
                         <li class="nav-item"><a href="{{route('admin.news.index')}}" class="nav-link">Bài viết</a></li>
                     </ul>
                 </li>
+
+                <li class="nav-item nav-item-submenu">
+                    <a href="#" class="nav-link"><i class="icon-newspaper2"></i> <span>Toplist</span></a>
+                    <ul class="nav nav-group-sub" data-submenu-title="Layouts">
+                        <li class="nav-item"><a href="{{route('admin.toplist-category.index')}}" class="nav-link">Danh mục</a></li>
+                        <li class="nav-item"><a href="{{route('admin.toplist.index')}}" class="nav-link">Bài viết</a></li>
+                    </ul>
+                </li>
                 
                 <!-- <li class="nav-item nav-item-submenu">
                     <a href="#" class="nav-link"><i class="icon-copy"></i> <span>Sản phẩm</span></a>
