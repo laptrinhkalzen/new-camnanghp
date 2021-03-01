@@ -110,10 +110,11 @@ class NewsController extends Controller {
      */
     public function edit($id) {
         $record = $this->newsRepo->find($id);
-        $category_ids = $record->categories()->get()->pluck('id')->toArray();
-        $options = $this->categoryRepo->readCategoryByType(\App\Category::TYPE_NEWS);
-        $category_html = \App\Helpers\StringHelper::getSelectOptions($options, $category_ids);
-        return view('backend/news/edit', compact('record', 'category_html'));
+        foreach( explode(',',$record->category_id) as $key => $value){
+            $cat_id[]=$value;
+        }
+        $categories=DB::table('news_category')->get();
+        return view('backend/news/edit', compact('record','cat_id','categories'));
     }
 
     /**
@@ -124,7 +125,8 @@ class NewsController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $input = $request->all();
+         $input = $request->except(['_token']);
+        //dd($input->category_id);
         $validator = \Validator::make($input, $this->newsRepo->validateUpdate($id));
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -132,12 +134,29 @@ class NewsController extends Controller {
 //      status
         $input['status'] = (isset($input['status']) && \Auth::user()->role_id <> \App\User::ROLE_CONTRIBUTOR) ? 1 : 0;
         $input['is_hot'] = isset($input['is_hot']) ? 1 : 0;
-        
+        $count=0;
+        foreach ($input['category_id'] as $key => $value) {
+            $count++;
+        }
 
-        $res = $this->newsRepo->update($input, $id);
+        //dd($count);
+       // dd($input['category_id']);
+        foreach ($input['category_id'] as $key => $value) {
+            if($key==0){
+            $input['category_id']=$value;
+        }
+        elseif($key==$count-1 ){
+            $input['category_id'].=','.$value;
+        }
+        else{
+            $input['category_id'].=','.$value;
+        }
+        }
+
+        $res = DB::table('news')->where('id',$id)->update($input);
         if ($res == true) {
-            $news = $this->newsRepo->find($id);
-            $news->categories()->sync($input['category_id']);
+            // $news = $this->newsRepo->find($id);
+            // $news->categories()->sync($input['category_id']);
             return redirect()->route('admin.news.index')->with('success', 'Cập nhật thành công');
         } else {
             return redirect()->route('admin.news.index')->with('error', 'Cập nhật thất bại');

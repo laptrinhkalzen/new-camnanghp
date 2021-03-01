@@ -33,7 +33,16 @@
                                                 <label class="col-md-3 col-form-label text-right">Danh mục <span class="text-danger">*</span></label>
                                                 <div class="col-md-9">
                                                     <select class="select-search form-control" name="category_id[]"data-placeholder="Chọn danh mục" multiple="" required>
-                                                        {!!$category_html!!}
+                                                        @foreach($cat_id as $key1 => $category_id)
+                                                            @foreach($categories as $key => $category)
+                                                            @if($category->id==$category_id)
+                                                            <option value="{{$category->id}}" selected="">{{$category->title}}</option>
+                                                            @endif
+                                                            @if($key1==0)
+                                                            <option value="{{$category->id}}" >{{$category->title}}</option>
+                                                            @endif
+                                                            @endforeach
+                                                        @endforeach
                                                     </select>
                                                     {!! $errors->first('alias', '<span class="text-danger">:message</span>') !!}
                                                 </div>
