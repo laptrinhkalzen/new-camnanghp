@@ -8,7 +8,7 @@ use Repositories\NewsRepository;
 use App\Repositories\TopListRepository;
 use App\Repositories\TopListCategoryRepository;
 use Repositories\CategoryRepository;
-
+use DB;
 class ToplistController extends Controller {
 
     /**
@@ -29,7 +29,8 @@ class ToplistController extends Controller {
         } else {
             $records = $this->toplistRepo->getAllByUserId(\Auth::user()->id);
         }
-        return view('backend/toplist/index', compact('records'));
+        $toplist_category = DB::table('toplist_category')->get();
+        return view('backend/toplist/index', compact('records','toplist_category'));
     }
 
     /**

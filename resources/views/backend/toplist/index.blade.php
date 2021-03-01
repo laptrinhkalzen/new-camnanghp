@@ -39,7 +39,13 @@
                 <tr>
                     <td>{{++$key}}</td>
                     <td>{{$record->title}}</td>
-                    <td>{{$record->category_id}}</td>
+                    <td>                    
+                        @foreach($toplist_category as $key=>$category)
+                        @if($category->id==$record->category_id)
+                    <p><i class="fa fa-list-ul" aria-hidden="true">{{$category->title}}</i></p>
+                        @endif
+                    @endforeach
+                    </td>
                     <td>
                         @if($record->status == 1)
                         <span class="badge bg-success-400">Hiển thị</span>
