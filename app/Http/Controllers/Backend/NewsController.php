@@ -23,13 +23,14 @@ class NewsController extends Controller {
     }
 
     public function index() {
-            $records = DB::table('news')->get();
-            $news_category = DB::table('news_category')->get();
+            $records = DB::table('news')->orderBy('id','desc')->get();
+            $news_category = DB::table('news_category')->get();   
         return view('backend/news/index', compact('records','news_category'));
     }
 
     /**
      * Show the form for creating a new resource.
+
      *
      * @return \Illuminate\Http\Response
      */

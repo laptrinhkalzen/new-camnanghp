@@ -38,12 +38,12 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::delete('/toplist/delete/{id}', ['as' => 'admin.toplist.destroy', 'uses' => 'Backend\ToplistController@destroy']);
 
     /* Quản lý Danh mục Toplist */
-    Route::get('/toplist-category', ['as' => 'admin.toplist-category.index', 'uses' => 'Backend\ToplistCategoryController@index']);
-    Route::get('/toplist-category/create', ['as' => 'admin.toplist-category.create', 'uses' => 'Backend\ToplistCategoryController@create']);
-    Route::post('/toplist-category/store', ['as' => 'admin.toplist-category.store', 'uses' => 'Backend\ToplistCategoryController@store']);
-    Route::get('/toplist-category/edit/{id}', ['as' => 'admin.toplist-category.edit', 'uses' => 'Backend\ToplistCategoryController@edit']);
-    Route::post('/toplist-category/update/{id}', ['as' => 'admin.toplist-category.update', 'uses' => 'Backend\ToplistCategoryController@update']);
-    Route::delete('/toplist-category/delete/{id}', ['as' => 'admin.toplist-category.destroy', 'uses' => 'Backend\ToplistCategoryController@destroy']);
+    Route::get('/toplist-category', ['as' => 'admin.toplist_category.index', 'uses' => 'Backend\ToplistCategoryController@index']);
+    Route::get('/toplist-category/create', ['as' => 'admin.toplist_category.create', 'uses' => 'Backend\ToplistCategoryController@create']);
+    Route::post('/toplist-category/store', ['as' => 'admin.toplist_category.store', 'uses' => 'Backend\ToplistCategoryController@store']);
+    Route::get('/toplist-category/edit/{id}', ['as' => 'admin.toplist_category.edit', 'uses' => 'Backend\ToplistCategoryController@edit']);
+    Route::post('/toplist-category/update/{id}', ['as' => 'admin.toplist_category.update', 'uses' => 'Backend\ToplistCategoryController@update']);
+    Route::delete('/toplist-category/delete/{id}', ['as' => 'admin.toplist_category.destroy', 'uses' => 'Backend\ToplistCategoryController@destroy']);
 
     /* Quản lý product */
     Route::get('/product', ['as' => 'admin.product.index', 'uses' => 'Backend\ProductController@index']);

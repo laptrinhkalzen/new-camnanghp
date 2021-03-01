@@ -20,7 +20,7 @@ class NewsCategoryController extends Controller {
     }
 
     public function index() {
-        $records = DB::table('news_category')->get();
+        $records = DB::table('news_category')->orderBy('id','desc')->get();
         return view('backend/news_category/index', compact('records'));
     }
 

@@ -36,15 +36,29 @@
             </thead>
             <tbody>
                 @foreach($records as $key=>$record)
-                    
+                    @php
+                    $dem=0;
+                    @endphp
                 <tr>
                     <td>{{++$key}}</td>
-                    <td><a style="color: #1E88E5;">{{$record->title}}</a>
-                    @foreach($news_category as $key=>$category)
-                        @if($category->id==$record->category_id)
-                    <p><i class="fa fa-list-ul" aria-hidden="true">{{$category->title}}</i></p>
-                        @endif
+                    <td><a href="{{route('admin.news.edit', $record->id)}}" style="color: #1E88E5;">{{$record->title}}</a>
+                    <p>
+                    @foreach($news_category as $cat)
+                    @foreach( explode(',',$record->category_id) as $key => $value)
+
+                    @if($value==$cat->id)
+                    @php
+                    $dem++;
+                    @endphp
+                    @if($dem==1)
+                    <i class="fa fa-list-ul" aria-hidden="true">{{$cat->title}}</i>
+                    @elseif($dem>1)
+                    , &nbsp <i class="fa fa-list-ul" aria-hidden="true">{{$cat->title}}</i>
+                    @endif
+                    @endif
                     @endforeach
+                    @endforeach
+                    </p>
                     </td>
                     <td>{{$record->created_at}}</td>
                     <td>

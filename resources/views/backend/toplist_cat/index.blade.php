@@ -38,7 +38,7 @@
                 @foreach($records as $key=>$record)
                 <tr>
                     <td>{{++$key}}</td>
-                    <td>{{$record->title}}</td>
+                    <td><a href="{{route('admin.toplist_category.edit', $record->id)}}">{{$record->title}}</a></td>
                     <td>{{$record->created_at}}</td>
                     <td>
                         @if($record->status == 1)
@@ -48,8 +48,8 @@
                         @endif
                     </td>
                     <td class="text-center">
-                        <a href="{{route('admin.toplist-category.edit', $record->id)}}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
-                        <form action="{!! route('admin.toplist-category.destroy', ['id' => $record->id]) !!}" method="POST" style="display: inline-block">
+                        <a href="{{route('admin.toplist_category.edit', $record->id)}}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
+                        <form action="{!! route('admin.toplist_category.destroy', ['id' => $record->id]) !!}" method="POST" style="display: inline-block">
                             {!! method_field('DELETE') !!}
                             {!! csrf_field() !!}
                             <a title="{!! trans('base.delete') !!}" class="delete text-danger" data-action="delete">

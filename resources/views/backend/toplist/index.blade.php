@@ -38,7 +38,7 @@
                 @foreach($records as $key=>$record)
                 <tr>
                     <td>{{++$key}}</td>
-                    <td>{{$record->title}}</td>
+                    <td><a href="{{route('admin.toplist.edit', $record->id)}}">{{$record->title}}</a></td>
 
                     <td>
                         @foreach($cats as $cat)
