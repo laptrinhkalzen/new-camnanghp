@@ -52,7 +52,7 @@ class TopListCategoryController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $this->toplistcategoryRepo->create($input);
-        return redirect()->route('admin.toplist-category.index')->with('success', 'Tạo mới thành công');
+        return redirect()->route('admin.toplist_category.index')->with('success', 'Tạo mới thành công');
     }
 
     /**
@@ -99,7 +99,7 @@ class TopListCategoryController extends Controller {
             return redirect()->back()->withErrors($validator)->withInput();
         }
         $this->toplistcategoryRepo->update($input, $id);
-        return redirect()->route('admin.toplist-category.index')->with('success', 'Cập nhật thành công');
+        return redirect()->route('admin.toplist_category.index')->with('success', 'Cập nhật thành công');
         //
     }
 
@@ -111,7 +111,7 @@ class TopListCategoryController extends Controller {
      */
     public function destroy($id) {
         $res = $this->toplistcategoryRepo->delete($id);
-        return redirect()->route('admin.toplist-category.index')->with('success', 'Xóa thành công');
+        return redirect()->route('admin.toplist_category.index')->with('success', 'Xóa thành công');
     }
 
 }
