@@ -90,6 +90,9 @@ class NewsCategoryController extends Controller {
      */
     public function update(Request $request, $id) {
         $input = $request->all();
+        if($input['images']==null){
+            unset($input['images']);
+        }
         if (isset($input['status'])) {
             $input['status'] = 1;
         } else {

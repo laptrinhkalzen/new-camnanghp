@@ -112,14 +112,11 @@
 @parent
 <script type="text/javascript">
     var button1 = document.getElementById( 'ckfinder-popup-1' );
-var button2 = document.getElementById( 'ckfinder-popup-2' );
 
 button1.onclick = function() {
     selectFileWithCKFinder( 'ckfinder-input-1' );
 };
-button2.onclick = function() {
-    selectFileWithCKFinder( 'ckfinder-input-2' );
-};
+
 
 function selectFileWithCKFinder( elementId ) {
 

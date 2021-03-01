@@ -128,6 +128,9 @@ class NewsController extends Controller {
          $input = $request->except(['_token']);
         //dd($input->category_id);
         $validator = \Validator::make($input, $this->newsRepo->validateUpdate($id));
+        if($input['images']==null){
+            unset($input['images']);
+        }
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
