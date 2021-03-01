@@ -148,6 +148,7 @@
         filebrowserFlashUploadUrl: '{{ asset('ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash') }}'
     } );
 </script>-->
+@include('ckfinder::setup')
 <script src="{!! asset('assets/backend/js/custom.js') !!}"></script>
 @stop
 

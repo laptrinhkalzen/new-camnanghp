@@ -43,7 +43,7 @@
                     <td>
                         @foreach($cats as $cat)
                         @if($record->category_id==$cat->id)
-                        <p><i class="fa fa-list-ul" aria-hidden="true">{{$cat->title}}</i></p>
+                        {{$cat->title}}
                         
                         @endif
                         @endforeach

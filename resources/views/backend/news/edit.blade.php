@@ -203,5 +203,5 @@
 <script src="{!! asset('assets/global_assets/js/plugins/notifications/jgrowl.min.js') !!}"></script>
 <script src="{!! asset('assets/backend/ckeditor/ckeditor.js') !!}"></script>
 <script src="{!! asset('assets/backend/js/custom.js') !!}"></script>
-
+@include('ckfinder::setup')
 @stop

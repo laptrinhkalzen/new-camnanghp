@@ -89,6 +89,7 @@
                     <ul class="nav nav-group-sub" data-submenu-title="Layouts">
                         <li class="nav-item"><a href="{{route('admin.toplist-category.index')}}" class="nav-link">Danh mục</a></li>
                         <li class="nav-item"><a href="{{route('admin.toplist.index')}}" class="nav-link">Bài viết</a></li>
+                        <li class="nav-item"><a href="" class="nav-link">Đánh giá</a></li>
                     </ul>
                 </li>
                 
