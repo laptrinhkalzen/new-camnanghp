@@ -30,9 +30,9 @@ class BackendController  extends Controller
     {
         $news_count = $this->newsRepo->all()->count();
         $toplist_count = DB::table('toplist')->count();
-        $contact_count=0;
+        $member_count = DB::table('member')->count();;
         
-        return view('backend/index', compact('news_count','contact_count','toplist_count'));
+        return view('backend/index', compact('news_count','member_count','toplist_count'));
     }
 
 

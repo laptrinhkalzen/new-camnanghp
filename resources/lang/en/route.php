@@ -45,5 +45,5 @@ return [
     'admin.service.index' => 'Dịch vụ',
     'admin.review.index'=>'Đánh giá',
     'admin.toplist.index' => 'Toplist',
-    'admin.toplist-category.index' => 'Danh mục Toplist'
+    'admin.toplist_category.index' => 'Danh mục Toplist'
 ];

@@ -19,11 +19,12 @@
 
         <!-- User menu -->
         <div class="sidebar-user">
-            <div class="card-body">
-                <div class="media">
-                    <div class="mr-3">
-                        <a href="#"><img src="{!!Auth::user()->avatar!!}" width="38" height="38" class="rounded-circle" alt=""></a>
+            <div style="text-align: center;" class="card-body">
+                <div class="">
+                        <a href="/"><img src="{!!Auth::user()->avatar!!}" width="90" height="90" class="rounded-circle" alt=""></a>
                     </div>
+                <div class="media">
+                    
 
                     <div class="media-body">
                         <div class="media-title font-weight-semibold">{!!Auth::user()->full_name!!}</div>
