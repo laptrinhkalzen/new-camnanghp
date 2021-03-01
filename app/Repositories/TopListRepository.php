@@ -16,13 +16,13 @@ class TopListRepository extends AbstractRepository {
 
     public function validateCreate() {
         return $rules = [
-            'title' => 'required|unique:news',
+            'title' => 'required|unique:toplist'
         ];
     }
 
     public function validateUpdate($id) {
         return $rules = [
-            'title' => 'required|unique:news,title,' . $id . ',id',
+            'title' => 'required|unique:toplist,title,' . $id . ',id'
         ];
     }
 

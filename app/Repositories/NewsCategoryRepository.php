@@ -22,15 +22,13 @@ class NewsCategoryRepository extends AbstractRepository
     }
     public function validateCreate() {
         return $rules = [
-            'title' => 'required',
-            'alias' => 'required'
+            'title' => 'required|unique:news_category'
         ];
     }
 
     public function validateUpdate($id) {
         return $rules = [
-            'title' => 'required',
-            'alias' => 'required'
+            'title' => 'required|unique:news_category,title,' . $id . ',id'
         ];
     }
     

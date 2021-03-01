@@ -9,7 +9,7 @@ class Toplist extends Model {
     //
     protected $table = "toplist";
     protected $fillable = [
-        'title', 'address', 'category_id', 'content', 'images', 'status', 'odering', 'created_by'
+        'title', 'address', 'category_id', 'content', 'images','vote_sum', 'status', 'odering', 'created_by','updated_by','language'
     ];
 
     public function getPostSchedule() {

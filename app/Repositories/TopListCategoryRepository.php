@@ -16,14 +16,14 @@ class ToplistCategoryRepository extends AbstractRepository {
 
     public function validateCreate() {
         return $rules = [
-            'title' => 'required',
+            'title' => 'required|unique:toplist_category',
             'alias' => 'required'
         ];
     }
 
     public function validateUpdate($id) {
         return $rules = [
-            'title' => 'required',
+            'title' => 'required|unique:toplist_category,title,' . $id . ',id',
             'alias' => 'required'
         ];
     }

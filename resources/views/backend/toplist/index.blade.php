@@ -39,7 +39,13 @@
                 <tr>
                     <td>{{++$key}}</td>
                     <td>{{$record->title}}</td>
-                    <td>{{$record->category_id}}</td>
+                    <td>
+                        @foreach($cats as $cat)
+                        @if($record->category_id==$cat->id)
+                        {{$cat->title}}
+                        @endif
+                        @endforeach
+                    </td>
                     <td>
                         @if($record->status == 1)
                         <span class="badge bg-success-400">Hiển thị</span>
@@ -48,8 +54,8 @@
                         @endif
                     </td>
                     <td class="text-center">
-                        <a href="" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
-                        <form action="{!! route('admin.news.destroy', ['id' => $record->id]) !!}" method="POST" style="display: inline-block">
+                        <a href="{!! route('admin.toplist.edit', ['id' => $record->id]) !!}" title="{!! trans('base.edit') !!}" class="success"><i class="icon-pencil"></i></a>
+                        <form action="{!! route('admin.toplist.destroy', ['id' => $record->id]) !!}" method="POST" style="display: inline-block">
                             {!! method_field('DELETE') !!}
                             {!! csrf_field() !!}
                             <a title="{!! trans('base.delete') !!}" class="delete text-danger" data-action="delete">

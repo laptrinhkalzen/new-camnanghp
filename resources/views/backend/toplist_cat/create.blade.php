@@ -20,6 +20,14 @@
                         <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
                         <fieldset>
                             <div class="form-group row">
+                                <label class="col-md-3 col-form-label text-right">Danh mục cha</label>
+                                <div class="col-md-9">
+                                    <select class="form-control select-search" data-placeholder="Chọn danh mục cha" data-fouc name="parent_id">
+                                        {!!$parent_html!!}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
                                 <label class="col-md-3 col-form-label text-right">Tiêu đề <span class="text-danger">*</span></label>
                                 <div class="col-md-9">
                                     <input type="text" class="form-control" name="title" value="{!!old('title')!!}" required="">
@@ -165,6 +173,6 @@ function selectFileWithCKFinder( elementId ) {
 
 <script type="text/javascript" src="/js/ckfinder/ckfinder.js"></script>
 <script>CKFinder.config( { connectorPath: '/ckfinder/connector' } );</script>
-@include('ckfinder::setup')
+
 
 @stop

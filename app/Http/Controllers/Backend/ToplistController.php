@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Repositories\NewsRepository;
 use App\Repositories\TopListRepository;
 use App\Repositories\TopListCategoryRepository;
-use Repositories\CategoryRepository;
+use Carbon\Carbon;
+use DB;
 
 class ToplistController extends Controller {
 
@@ -16,9 +16,8 @@ class ToplistController extends Controller {
      *
      * @return \Illuminate\Http\Response
      */
-    public function __construct(ToplistRepository $toplistRepo, CategoryRepository $categoryRepo,ToplistCategoryRepository $toplistcategoryRepo) {
+    public function __construct(ToplistRepository $toplistRepo, ToplistCategoryRepository $toplistcategoryRepo) {
         $this->toplistRepo = $toplistRepo;
-        $this->categoryRepo = $categoryRepo;
         $this->toplistcategoryRepo = $toplistcategoryRepo;
     }
 
@@ -29,7 +28,8 @@ class ToplistController extends Controller {
         } else {
             $records = $this->toplistRepo->getAllByUserId(\Auth::user()->id);
         }
-        return view('backend/toplist/index', compact('records'));
+            $cats=DB::table('toplist_category')->get();
+        return view('backend/toplist/index', compact('records','cats'));
     }
 
     /**
@@ -50,7 +50,7 @@ class ToplistController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        $input = $request->all();
+        $input = $request->except(['_token']);
         $validator = \Validator::make($input, $this->toplistRepo->validateCreate());
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
@@ -62,9 +62,28 @@ class ToplistController extends Controller {
             $input['status'] = 0;
         }
         $input['created_by'] = \Auth::user()->id;
-        $news = $this->toplistRepo->create($input);
-        $news->categories()->attach($input['category_id']);
-        if ($news) {
+        $input['created_at'] = Carbon::now('Asia/Ho_Chi_Minh');
+        // $input['updated_at'] = '0000-00-00 00:00:00 ';
+        $count=0;
+        foreach ($input['category_id'] as $key => $value) {
+            $count++;
+        }
+
+        //dd($count);
+       // dd($input['category_id']);
+        foreach ($input['category_id'] as $key => $value) {
+            if($key==0){
+            $input['category_id']=$value;
+        }
+        elseif($key==$count-1 ){
+            $input['category_id'].=','.$value;
+        }
+        else{
+            $input['category_id'].=','.$value;
+        }
+        }
+        $toplist = DB::table('toplist')->insert($input);
+                if ($toplist) {
             return redirect()->route('admin.toplist.index')->with('success', 'Tạo mới thành công');
         } else {
             return redirect()->route('admin.toplist.index')->with('error', 'Tạo mới thất bại');
@@ -88,11 +107,12 @@ class ToplistController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit($id) {
-        $record = $this->newsRepo->find($id);
-        $category_ids = $record->categories()->get()->pluck('id')->toArray();
-        $options = $this->categoryRepo->readCategoryByType(\App\Category::TYPE_NEWS);
-        $category_html = \App\Helpers\StringHelper::getSelectOptions($options, $category_ids);
-        return view('backend/news/edit', compact('record', 'category_html'));
+        $record = $this->toplistRepo->find($id);
+        foreach( explode(',',$record->category_id) as $key => $value){
+            $cat_id[]=$value;
+        }
+        $categories=DB::table('toplist_category')->get();
+        return view('backend/toplist/edit', compact('record','cat_id','categories'));
     }
 
     /**
@@ -103,25 +123,39 @@ class ToplistController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id) {
-        $input = $request->all();
-        $validator = \Validator::make($input, $this->newsRepo->validateUpdate($id));
+        $input = $request->except(['_token']);
+        $validator = \Validator::make($input, $this->toplistRepo->validateUpdate($id));
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 //      status
         $input['status'] = (isset($input['status']) && \Auth::user()->role_id <> \App\User::ROLE_CONTRIBUTOR) ? 1 : 0;
-        $input['is_hot'] = isset($input['is_hot']) ? 1 : 0;
-        if (isset($input['post_schedule'])) {
-            $input['post_schedule'] = $input['post_schedule_submit'];
+        
+        $count=0;
+        foreach ($input['category_id'] as $key => $value) {
+            $count++;
         }
 
-        $res = $this->newsRepo->update($input, $id);
+        //dd($count);
+       // dd($input['category_id']);
+        foreach ($input['category_id'] as $key => $value) {
+            if($key==0){
+            $input['category_id']=$value;
+        }
+        elseif($key==$count-1 ){
+            $input['category_id'].=','.$value;
+        }
+        else{
+            $input['category_id'].=','.$value;
+        }
+        }
+
+        $res = DB::table('toplist')->where('id',$id)->update($input);
         if ($res == true) {
-            $news = $this->newsRepo->find($id);
-            $news->categories()->sync($input['category_id']);
-            return redirect()->route('admin.news.index')->with('success', 'Cập nhật thành công');
+            
+            return redirect()->route('admin.toplist.index')->with('success', 'Cập nhật thành công');
         } else {
-            return redirect()->route('admin.news.index')->with('error', 'Cập nhật thất bại');
+            return redirect()->route('admin.toplist.index')->with('error', 'Cập nhật thất bại');
         }
     }
 
@@ -132,10 +166,10 @@ class ToplistController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $news = $this->newsRepo->find($id);
-        $news->categories()->detach();
-        $this->newsRepo->delete($id);
-        return redirect()->route('admin.news.index')->with('success', 'Xóa thành công');
+        $toplist = $this->toplistRepo->find($id);
+        $toplist->categories()->detach();
+        $this->toplistRepo->delete($id);
+        return redirect()->route('admin.toplist.index')->with('success', 'Xóa thành công');
         //
     }
 
