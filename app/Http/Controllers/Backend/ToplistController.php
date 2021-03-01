@@ -28,8 +28,11 @@ class ToplistController extends Controller {
         } else {
             $records = $this->toplistRepo->getAllByUserId(\Auth::user()->id);
         }
+
             $cats=DB::table('toplist_category')->get();
         return view('backend/toplist/index', compact('records','cats'));
+        
+
     }
 
     /**

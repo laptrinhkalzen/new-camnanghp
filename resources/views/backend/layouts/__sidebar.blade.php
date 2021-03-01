@@ -107,7 +107,7 @@
                         <li class="nav-item"><a href="{{route('admin.menu.index')}}" class="nav-link">Menu</a></li>
                     </ul>
                 </li> -->
-                <li class="nav-item nav-item-submenu">
+                <li class="nav-item">
                     <a href="{{route('admin.member.index')}}" class="nav-link"><i class="icon-users"></i> <span>Quản trị thành viên</span></a>
                     <!-- <ul class="nav nav-group-sub" data-submenu-title="Khách hàng">
                         <li class="nav-item"><a href="{{route('admin.contact.index')}}" class="nav-link">Liên hệ</a></li>

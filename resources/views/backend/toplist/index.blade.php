@@ -39,13 +39,14 @@
                 <tr>
                     <td>{{++$key}}</td>
                     <td>{{$record->title}}</td>
+
                     <td>
                         @foreach($cats as $cat)
                         @if($record->category_id==$cat->id)
-                        {{$cat->title}}
+                        <p><i class="fa fa-list-ul" aria-hidden="true">{{$cat->title}}</i></p>
+                        
                         @endif
                         @endforeach
-                    </td>
                     <td>
                         @if($record->status == 1)
                         <span class="badge bg-success-400">Hiển thị</span>
