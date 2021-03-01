@@ -128,6 +128,9 @@ class ToplistController extends Controller {
     public function update(Request $request, $id) {
         $input = $request->except(['_token']);
         $validator = \Validator::make($input, $this->toplistRepo->validateUpdate($id));
+        if($input['images']==null){
+            unset($input['images']);
+        }
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
@@ -152,7 +155,6 @@ class ToplistController extends Controller {
             $input['category_id'].=','.$value;
         }
         }
-
         $res = DB::table('toplist')->where('id',$id)->update($input);
         if ($res == true) {
             
@@ -169,9 +171,7 @@ class ToplistController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy($id) {
-        $toplist = $this->toplistRepo->find($id);
-        $toplist->categories()->detach();
-        $this->toplistRepo->delete($id);
+        $toplist = DB::table('toplist')->where('id',$id)->delete();
         return redirect()->route('admin.toplist.index')->with('success', 'Xóa thành công');
         //
     }

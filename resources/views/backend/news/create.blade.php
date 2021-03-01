@@ -57,25 +57,12 @@
                                                 </div>
                                             </div>
                                             <div class="form-group row">
-                                                <label class="col-md-3 required control-label text-right text-semibold" for="images">Hình ảnh:</label>
-                                                <div class="col-lg-9 div-image">
-                                                    <div class="file-input file-input-ajax-new">
-                                                        <div class="file-preview ">
-                                                            <div class=" file-drop-zone">
-                                                            </div>
-                                                        </div>
-                                                        <div class="input-group file-caption-main">
-                                                            <div class="file-caption form-control kv-fileinput-caption" tabindex="500">
-                                                            </div>
-                                                            <div class="input-group-btn input-group-append">
-                                                                <div tabindex="500" class="btn btn-primary btn-file"><i class="icon-folder-open"></i>&nbsp; <span class="hidden-xs">Chọn</span>
-                                                                    <input type="file" id="images" class="upload-images" multiple="multiple" name="file_upload[]" data-fouc="">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <input type="hidden" name="images" class="image_data">
-                                                    <span class="help-block">Chỉ cho phép các file ảnh có đuôi <code>jpg</code>, <code>gif</code> và <code>png</code>. File có dung lượng tối đa 20M.</span>
+                                                <label class="col-md-3 col-form-label text-right">Hình ảnh</label>
+                                                <div class="col-md-9">
+                                                    <button type="button" class="btn btn-primary legitRipple" id="ckfinder-popup-1">Upload</button>
+                                                    <input hidden type="text" id="ckfinder-input-1" name="images">
+                                                    <div id="preview_image" class="mt-3"></div>
+
                                                 </div>
                                             </div>
                                             <div class="form-group row">
@@ -131,6 +118,47 @@
 @stop
 @section('script')
 @parent
+<script type="text/javascript">
+    var button1 = document.getElementById( 'ckfinder-popup-1' );
+
+button1.onclick = function() {
+    selectFileWithCKFinder( 'ckfinder-input-1' );
+};
+
+
+function selectFileWithCKFinder( elementId ) {
+
+    CKFinder.modal( {
+        chooseFiles: true,
+        width: 800,
+        height: 600,
+        onInit: function( finder ) {
+            finder.on( 'files:choose', function( evt ) {
+                var file = evt.data.files.first();
+                var output = document.getElementById( elementId );
+                output.value = file.getUrl();
+              showUploadedImage( file.getUrl() );
+
+            } );
+
+            finder.on( 'file:choose:resizedImage', function( evt ) {
+                var output = document.getElementById( elementId );
+                output.value = evt.data.resizedUrl;
+                showUploadedImage( evt.data.resizedUrl );
+
+            } );
+        }
+    } );
+
+    function showUploadedImage( url ) {
+            // Show chosen image to div tag
+            var img = jQuery( '<img width="600px" height="auto">' ).attr( 'src', url );
+            jQuery( '#preview_image' ).html( img );
+          }
+}
+
+
+</script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <script src="{!! asset('assets/global_assets/js/plugins/forms/selects/select2.min.js') !!}"></script>
@@ -171,6 +199,9 @@
 </script>-->
 
 <script src="{!! asset('assets/backend/js/custom.js') !!}"></script>
+
+<script type="text/javascript" src="/js/ckfinder/ckfinder.js"></script>
+<script>CKFinder.config( { connectorPath: '/ckfinder/connector' } );</script>
 @stop
 
                                             
