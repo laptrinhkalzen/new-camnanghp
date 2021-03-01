@@ -4,13 +4,13 @@
 <div class="content">
     <div class="row">
         <div class="col-sm-4">
-            <a href="">
+            <a href="{{route('admin.toplist.index')}}">
                 <div class="tile-stats tile-red"> 
-                    <div class="icon"><i class="icon-bag"></i>
+                    <div class="icon"><i class="icon-list"></i>
                     </div> 
                     <div class="num" data-start="0" data-end="3350" data-postfix="" data-duration="1500" data-delay="0">
-                                                </div>
-                    <h3>Sản phẩm</h3>
+                         {{$toplist_count}}</div>
+                    <h3>Toplist</h3>
                 </div>
             </a>
         </div>
@@ -31,7 +31,7 @@
                     <div class="icon"><i class="icon-bubble-dots4"></i>
                     </div> 
                     <div class="num" data-start="0" data-end="0" data-postfix="" data-duration="1500" data-delay="0">
-                                            </div>
+                        {{$contact_count}}</div>
                     <h3>Liên hệ</h3>
                 </div>
             </a>

@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Repositories\NewsRepository;
 use Repositories\ConfigRepository;
+use DB;
 
 
 
@@ -28,8 +29,10 @@ class BackendController  extends Controller
     public function index()
     {
         $news_count = $this->newsRepo->all()->count();
+        $toplist_count = DB::table('toplist')->count();
+        $contact_count=0;
         
-        return view('backend/index', compact('news_count'));
+        return view('backend/index', compact('news_count','contact_count','toplist_count'));
     }
 
 
