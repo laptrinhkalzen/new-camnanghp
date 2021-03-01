@@ -234,7 +234,7 @@ function selectFileWithCKFinder( elementId ) {
 <script src="{!! asset('assets/backend/ckeditor/ckeditor.js') !!}"></script>
 <script src="{!! asset('assets/backend/js/custom.js') !!}"></script>
 
-@include('ckfinder::setup')
+
 
 <script type="text/javascript" src="/js/ckfinder/ckfinder.js"></script>
 <script>CKFinder.config( { connectorPath: '/ckfinder/connector' } );</script>

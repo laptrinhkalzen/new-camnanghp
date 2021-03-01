@@ -26,7 +26,7 @@
             </a>
         </div>
         <div class="col-sm-4">
-            <a href="{{route('admin.member.index')}}">
+            <a href="{{route('admin.member.index')}}">  
                 <div class="tile-stats tile-green"> 
                     <div class="icon"><i class="icon-bubble-dots4"></i>
                     </div> 

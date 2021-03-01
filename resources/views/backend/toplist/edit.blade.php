@@ -182,5 +182,5 @@ function selectFileWithCKFinder( elementId ) {
 <!-- Custom -->
 <script type="text/javascript" src="/js/ckfinder/ckfinder.js"></script>
 <script>CKFinder.config( { connectorPath: '/ckfinder/connector' } );</script>
-@include('ckfinder::setup')
+
 @stop
