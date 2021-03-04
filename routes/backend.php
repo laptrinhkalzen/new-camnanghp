@@ -114,5 +114,19 @@ Route::group(['prefix' => 'admin', 'middleware' => 'admin'], function() {
     Route::delete('/order/delete/{id}', ['as' => 'admin.order.destroy', 'uses' => 'Backend\OrderController@destroy']);
     Route::get('/order/show/{id}', ['as' => 'admin.order.edit', 'uses' => 'Backend\OrderController@show']);
 
+    /*Notification*/
+    Route::get('send-notification', ['as' => 'admin.notification.edit', 'uses' => 'Backend\NotificationController@sendNofication']);
+    Route::get('test-111', function () {
+    event(new App\Events\StatusLiked('Someone'));
+    return "Event has been sent!";
+});
+    Route::get('123', function () {
+    return view('showNotification');
+});
+
+    Route::get('getPusher', function (){
+   return view('form_pusher');
+});
+    Route::get('pusher', ['as' => 'admin.pusher.edit', 'uses' => 'Backend\PusherController@pusher']);
 
 });
